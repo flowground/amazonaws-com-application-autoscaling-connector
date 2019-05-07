@@ -1,0 +1,295 @@
+{
+    "type": "object",
+    "properties": {
+        "Action": {
+            "required": true,
+            "type": "string"
+        },
+        "Version": {
+            "required": true,
+            "type": "string"
+        },
+        "requestBody": {
+            "example": {
+                "PolicyName": "fleet-cpu-gt-75",
+                "PolicyType": "StepScaling",
+                "ResourceId": "spot-fleet-request/sfr-45e69d8a-be48-4539-bbf3-3464e99c50c3",
+                "ScalableDimension": "ec2:spot-fleet-request:TargetCapacity",
+                "ServiceNamespace": "ec2",
+                "StepScalingPolicyConfiguration": {
+                    "AdjustmentType": "PercentChangeInCapacity",
+                    "Cooldown": 180,
+                    "StepAdjustments": [
+                        {
+                            "MetricIntervalLowerBound": 0,
+                            "ScalingAdjustment": 200
+                        }
+                    ]
+                }
+            },
+            "properties": {
+                "PolicyName": {
+                    "description": "The name of the scaling policy.",
+                    "maxLength": 256,
+                    "minLength": 1,
+                    "pattern": "\\p{Print}+",
+                    "type": "string"
+                },
+                "PolicyType": {
+                    "description": "<p>The policy type. This parameter is required if you are creating a scaling policy.</p> <p>For information on which services do not support <code>StepScaling</code> or <code>TargetTrackingScaling</code>, see the information about <b>Limits</b> in <a href=\"https://docs.aws.amazon.com/autoscaling/application/userguide/application-auto-scaling-step-scaling-policies.html\">Step Scaling Policies</a> and <a href=\"https://docs.aws.amazon.com/autoscaling/application/userguide/application-auto-scaling-target-tracking.html\">Target Tracking Scaling Policies</a> in the <i>Application Auto Scaling User Guide</i>.</p>",
+                    "enum": [
+                        "StepScaling",
+                        "TargetTrackingScaling"
+                    ],
+                    "type": "string"
+                },
+                "ResourceId": {
+                    "description": "<p>The identifier of the resource associated with the scaling policy. This string consists of the resource type and unique identifier.</p> <ul> <li> <p>ECS service - The resource type is <code>service</code> and the unique identifier is the cluster name and service name. Example: <code>service/default/sample-webapp</code>.</p> </li> <li> <p>Spot fleet request - The resource type is <code>spot-fleet-request</code> and the unique identifier is the Spot fleet request ID. Example: <code>spot-fleet-request/sfr-73fbd2ce-aa30-494c-8788-1cee4EXAMPLE</code>.</p> </li> <li> <p>EMR cluster - The resource type is <code>instancegroup</code> and the unique identifier is the cluster ID and instance group ID. Example: <code>instancegroup/j-2EEZNYKUA1NTV/ig-1791Y4E1L8YI0</code>.</p> </li> <li> <p>AppStream 2.0 fleet - The resource type is <code>fleet</code> and the unique identifier is the fleet name. Example: <code>fleet/sample-fleet</code>.</p> </li> <li> <p>DynamoDB table - The resource type is <code>table</code> and the unique identifier is the resource ID. Example: <code>table/my-table</code>.</p> </li> <li> <p>DynamoDB global secondary index - The resource type is <code>index</code> and the unique identifier is the resource ID. Example: <code>table/my-table/index/my-table-index</code>.</p> </li> <li> <p>Aurora DB cluster - The resource type is <code>cluster</code> and the unique identifier is the cluster name. Example: <code>cluster:my-db-cluster</code>.</p> </li> <li> <p>Amazon SageMaker endpoint variants - The resource type is <code>variant</code> and the unique identifier is the resource ID. Example: <code>endpoint/my-end-point/variant/KMeansClustering</code>.</p> </li> <li> <p>Custom resources are not supported with a resource type. This parameter must specify the <code>OutputValue</code> from the CloudFormation template stack used to access the resources. The unique identifier is defined by the service provider. More information is available in our <a href=\"https://github.com/aws/aws-auto-scaling-custom-resource\">GitHub repository</a>.</p> </li> </ul>",
+                    "maxLength": 1600,
+                    "minLength": 1,
+                    "type": "string",
+                    "x-pattern": "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*"
+                },
+                "ScalableDimension": {
+                    "description": "<p>The scalable dimension. This string consists of the service namespace, resource type, and scaling property.</p> <ul> <li> <p> <code>ecs:service:DesiredCount</code> - The desired task count of an ECS service.</p> </li> <li> <p> <code>ec2:spot-fleet-request:TargetCapacity</code> - The target capacity of a Spot fleet request.</p> </li> <li> <p> <code>elasticmapreduce:instancegroup:InstanceCount</code> - The instance count of an EMR Instance Group.</p> </li> <li> <p> <code>appstream:fleet:DesiredCapacity</code> - The desired capacity of an AppStream 2.0 fleet.</p> </li> <li> <p> <code>dynamodb:table:ReadCapacityUnits</code> - The provisioned read capacity for a DynamoDB table.</p> </li> <li> <p> <code>dynamodb:table:WriteCapacityUnits</code> - The provisioned write capacity for a DynamoDB table.</p> </li> <li> <p> <code>dynamodb:index:ReadCapacityUnits</code> - The provisioned read capacity for a DynamoDB global secondary index.</p> </li> <li> <p> <code>dynamodb:index:WriteCapacityUnits</code> - The provisioned write capacity for a DynamoDB global secondary index.</p> </li> <li> <p> <code>rds:cluster:ReadReplicaCount</code> - The count of Aurora Replicas in an Aurora DB cluster. Available for Aurora MySQL-compatible edition and Aurora PostgreSQL-compatible edition.</p> </li> <li> <p> <code>sagemaker:variant:DesiredInstanceCount</code> - The number of EC2 instances for an Amazon SageMaker model endpoint variant.</p> </li> <li> <p> <code>custom-resource:ResourceType:Property</code> - The scalable dimension for a custom resource provided by your own application or service.</p> </li> </ul>",
+                    "enum": [
+                        "ecs:service:DesiredCount",
+                        "ec2:spot-fleet-request:TargetCapacity",
+                        "elasticmapreduce:instancegroup:InstanceCount",
+                        "appstream:fleet:DesiredCapacity",
+                        "dynamodb:table:ReadCapacityUnits",
+                        "dynamodb:table:WriteCapacityUnits",
+                        "dynamodb:index:ReadCapacityUnits",
+                        "dynamodb:index:WriteCapacityUnits",
+                        "rds:cluster:ReadReplicaCount",
+                        "sagemaker:variant:DesiredInstanceCount",
+                        "custom-resource:ResourceType:Property"
+                    ],
+                    "type": "string"
+                },
+                "ServiceNamespace": {
+                    "description": "The namespace of the AWS service that provides the resource or <code>custom-resource</code> for a resource provided by your own application or service. For more information, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html#genref-aws-service-namespaces\">AWS Service Namespaces</a> in the <i>Amazon Web Services General Reference</i>.",
+                    "enum": [
+                        "ecs",
+                        "elasticmapreduce",
+                        "ec2",
+                        "appstream",
+                        "dynamodb",
+                        "rds",
+                        "sagemaker",
+                        "custom-resource"
+                    ],
+                    "type": "string"
+                },
+                "StepScalingPolicyConfiguration": {
+                    "description": "<p>A step scaling policy.</p> <p>This parameter is required if you are creating a policy and the policy type is <code>StepScaling</code>.</p>",
+                    "properties": {
+                        "AdjustmentType": {
+                            "description": "The adjustment type, which specifies how the <code>ScalingAdjustment</code> parameter in a <a>StepAdjustment</a> is interpreted.",
+                            "enum": [
+                                "ChangeInCapacity",
+                                "PercentChangeInCapacity",
+                                "ExactCapacity"
+                            ],
+                            "type": "string"
+                        },
+                        "Cooldown": {
+                            "description": "<p>The amount of time, in seconds, after a scaling activity completes where previous trigger-related scaling activities can influence future scaling events.</p> <p>For scale-out policies, while the cooldown period is in effect, the capacity that has been added by the previous scale-out event that initiated the cooldown is calculated as part of the desired capacity for the next scale out. The intention is to continuously (but not excessively) scale out. For example, an alarm triggers a step scaling policy to scale out an Amazon ECS service by 2 tasks, the scaling activity completes successfully, and a cooldown period of 5 minutes starts. During the cooldown period, if the alarm triggers the same policy again but at a more aggressive step adjustment to scale out the service by 3 tasks, the 2 tasks that were added in the previous scale-out event are considered part of that capacity and only 1 additional task is added to the desired count.</p> <p>For scale-in policies, the cooldown period is used to block subsequent scale-in requests until it has expired. The intention is to scale in conservatively to protect your application's availability. However, if another alarm triggers a scale-out policy during the cooldown period after a scale-in, Application Auto Scaling scales out your scalable target immediately.</p>",
+                            "type": "integer"
+                        },
+                        "MetricAggregationType": {
+                            "description": "The aggregation type for the CloudWatch metrics. Valid values are <code>Minimum</code>, <code>Maximum</code>, and <code>Average</code>. If the aggregation type is null, the value is treated as <code>Average</code>.",
+                            "enum": [
+                                "Average",
+                                "Minimum",
+                                "Maximum"
+                            ],
+                            "type": "string"
+                        },
+                        "MinAdjustmentMagnitude": {
+                            "description": "<p>The minimum number to adjust your scalable dimension as a result of a scaling activity. If the adjustment type is <code>PercentChangeInCapacity</code>, the scaling policy changes the scalable dimension of the scalable target by this amount.</p> <p>For example, suppose that you create a step scaling policy to scale out an Amazon ECS service by 25 percent and you specify a <code>MinAdjustmentMagnitude</code> of 2. If the service has 4 tasks and the scaling policy is performed, 25 percent of 4 is 1. However, because you specified a <code>MinAdjustmentMagnitude</code> of 2, Application Auto Scaling scales out the service by 2 tasks.</p>",
+                            "type": "integer"
+                        },
+                        "StepAdjustments": {
+                            "description": "A set of adjustments that enable you to scale based on the size of the alarm breach.",
+                            "items": {
+                                "description": "<p>Represents a step adjustment for a <a>StepScalingPolicyConfiguration</a>. Describes an adjustment based on the difference between the value of the aggregated CloudWatch metric and the breach threshold that you've defined for the alarm. </p> <p>For the following examples, suppose that you have an alarm with a breach threshold of 50:</p> <ul> <li> <p>To trigger the adjustment when the metric is greater than or equal to 50 and less than 60, specify a lower bound of 0 and an upper bound of 10.</p> </li> <li> <p>To trigger the adjustment when the metric is greater than 40 and less than or equal to 50, specify a lower bound of -10 and an upper bound of 0.</p> </li> </ul> <p>There are a few rules for the step adjustments for your step policy:</p> <ul> <li> <p>The ranges of your step adjustments can't overlap or have a gap.</p> </li> <li> <p>At most one step adjustment can have a null lower bound. If one step adjustment has a negative lower bound, then there must be a step adjustment with a null lower bound.</p> </li> <li> <p>At most one step adjustment can have a null upper bound. If one step adjustment has a positive upper bound, then there must be a step adjustment with a null upper bound.</p> </li> <li> <p>The upper and lower bound can't be null in the same step adjustment.</p> </li> </ul>",
+                                "properties": {
+                                    "MetricIntervalLowerBound": {
+                                        "description": "The lower bound for the difference between the alarm threshold and the CloudWatch metric. If the metric value is above the breach threshold, the lower bound is inclusive (the metric must be greater than or equal to the threshold plus the lower bound). Otherwise, it is exclusive (the metric must be greater than the threshold plus the lower bound). A null value indicates negative infinity.",
+                                        "format": "double",
+                                        "type": "number"
+                                    },
+                                    "MetricIntervalUpperBound": {
+                                        "description": "<p>The upper bound for the difference between the alarm threshold and the CloudWatch metric. If the metric value is above the breach threshold, the upper bound is exclusive (the metric must be less than the threshold plus the upper bound). Otherwise, it is inclusive (the metric must be less than or equal to the threshold plus the upper bound). A null value indicates positive infinity.</p> <p>The upper bound must be greater than the lower bound.</p>",
+                                        "format": "double",
+                                        "type": "number"
+                                    },
+                                    "ScalingAdjustment": {
+                                        "description": "The amount by which to scale, based on the specified adjustment type. A positive value adds to the current scalable dimension while a negative number removes from the current scalable dimension.",
+                                        "type": "integer"
+                                    }
+                                },
+                                "required": [
+                                    "ScalingAdjustment"
+                                ],
+                                "type": "object"
+                            },
+                            "type": "array"
+                        }
+                    },
+                    "type": "object"
+                },
+                "TargetTrackingScalingPolicyConfiguration": {
+                    "description": "<p>A target tracking scaling policy. Includes support for predefined or customized metrics.</p> <p>This parameter is required if you are creating a policy and the policy type is <code>TargetTrackingScaling</code>.</p>",
+                    "properties": {
+                        "CustomizedMetricSpecification": {
+                            "description": "A customized metric. You can specify either a predefined metric or a customized metric.",
+                            "properties": {
+                                "Dimensions": {
+                                    "description": "<p>The dimensions of the metric. </p> <p>Conditional: If you published your metric with dimensions, you must specify the same dimensions in your scaling policy.</p>",
+                                    "items": {
+                                        "description": "Describes the dimension names and values associated with a metric.",
+                                        "properties": {
+                                            "Name": {
+                                                "description": "The name of the dimension.",
+                                                "type": "string"
+                                            },
+                                            "Value": {
+                                                "description": "The value of the dimension.",
+                                                "type": "string"
+                                            }
+                                        },
+                                        "required": [
+                                            "Name",
+                                            "Value"
+                                        ],
+                                        "type": "object"
+                                    },
+                                    "type": "array"
+                                },
+                                "MetricName": {
+                                    "description": "The name of the metric. ",
+                                    "type": "string"
+                                },
+                                "Namespace": {
+                                    "description": "The namespace of the metric.",
+                                    "type": "string"
+                                },
+                                "Statistic": {
+                                    "description": "The statistic of the metric.",
+                                    "enum": [
+                                        "Average",
+                                        "Minimum",
+                                        "Maximum",
+                                        "SampleCount",
+                                        "Sum"
+                                    ],
+                                    "type": "string"
+                                },
+                                "Unit": {
+                                    "description": "The unit of the metric.",
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "MetricName",
+                                "Namespace",
+                                "Statistic"
+                            ],
+                            "type": "object"
+                        },
+                        "DisableScaleIn": {
+                            "description": "Indicates whether scale in by the target tracking scaling policy is disabled. If the value is <code>true</code>, scale in is disabled and the target tracking scaling policy won't remove capacity from the scalable resource. Otherwise, scale in is enabled and the target tracking scaling policy can remove capacity from the scalable resource. The default value is <code>false</code>.",
+                            "type": "boolean"
+                        },
+                        "PredefinedMetricSpecification": {
+                            "description": "A predefined metric. You can specify either a predefined metric or a customized metric.",
+                            "properties": {
+                                "PredefinedMetricType": {
+                                    "description": "The metric type. The <code>ALBRequestCountPerTarget</code> metric type applies only to Spot fleet requests and ECS services.",
+                                    "enum": [
+                                        "DynamoDBReadCapacityUtilization",
+                                        "DynamoDBWriteCapacityUtilization",
+                                        "ALBRequestCountPerTarget",
+                                        "RDSReaderAverageCPUUtilization",
+                                        "RDSReaderAverageDatabaseConnections",
+                                        "EC2SpotFleetRequestAverageCPUUtilization",
+                                        "EC2SpotFleetRequestAverageNetworkIn",
+                                        "EC2SpotFleetRequestAverageNetworkOut",
+                                        "SageMakerVariantInvocationsPerInstance",
+                                        "ECSServiceAverageCPUUtilization",
+                                        "ECSServiceAverageMemoryUtilization"
+                                    ],
+                                    "type": "string"
+                                },
+                                "ResourceLabel": {
+                                    "description": "<p>Identifies the resource associated with the metric type. You can't specify a resource label unless the metric type is <code>ALBRequestCountPerTarget</code> and there is a target group attached to the Spot fleet request or ECS service.</p> <p>The format is app/&lt;load-balancer-name&gt;/&lt;load-balancer-id&gt;/targetgroup/&lt;target-group-name&gt;/&lt;target-group-id&gt;, where:</p> <ul> <li> <p>app/&lt;load-balancer-name&gt;/&lt;load-balancer-id&gt; is the final portion of the load balancer ARN</p> </li> <li> <p>targetgroup/&lt;target-group-name&gt;/&lt;target-group-id&gt; is the final portion of the target group ARN.</p> </li> </ul>",
+                                    "maxLength": 1023,
+                                    "minLength": 1,
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "PredefinedMetricType"
+                            ],
+                            "type": "object"
+                        },
+                        "ScaleInCooldown": {
+                            "description": "<p>The amount of time, in seconds, after a scale-in activity completes before another scale in activity can start.</p> <p>The cooldown period is used to block subsequent scale-in requests until it has expired. The intention is to scale in conservatively to protect your application's availability. However, if another alarm triggers a scale-out policy during the cooldown period after a scale-in, Application Auto Scaling scales out your scalable target immediately.</p>",
+                            "type": "integer"
+                        },
+                        "ScaleOutCooldown": {
+                            "description": "<p>The amount of time, in seconds, after a scale-out activity completes before another scale-out activity can start.</p> <p>While the cooldown period is in effect, the capacity that has been added by the previous scale-out event that initiated the cooldown is calculated as part of the desired capacity for the next scale out. The intention is to continuously (but not excessively) scale out.</p>",
+                            "type": "integer"
+                        },
+                        "TargetValue": {
+                            "description": "The target value for the metric. The range is 8.515920e-109 to 1.174271e+108 (Base 10) or 2e-360 to 2e360 (Base 2).",
+                            "format": "double",
+                            "type": "number"
+                        }
+                    },
+                    "required": [
+                        "TargetValue"
+                    ],
+                    "type": "object"
+                }
+            },
+            "required": [
+                "PolicyName",
+                "ServiceNamespace",
+                "ResourceId",
+                "ScalableDimension"
+            ],
+            "type": "object"
+        },
+        "X_Amz_Content_Sha256": {
+            "required": false,
+            "type": "string"
+        },
+        "X_Amz_Date": {
+            "required": false,
+            "type": "string"
+        },
+        "X_Amz_Algorithm": {
+            "required": false,
+            "type": "string"
+        },
+        "X_Amz_Credential": {
+            "required": false,
+            "type": "string"
+        },
+        "X_Amz_Security_Token": {
+            "required": false,
+            "type": "string"
+        },
+        "X_Amz_Signature": {
+            "required": false,
+            "type": "string"
+        },
+        "X_Amz_SignedHeaders": {
+            "required": false,
+            "type": "string"
+        }
+    }
+}
